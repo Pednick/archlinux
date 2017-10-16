@@ -1,0 +1,54 @@
+setfont sun12x22.psfu.gz
+mount -o remount,size=2G /run/archiso/cowspace
+pacman -S git screen
+git clone git://github.com/Pednick/AUI
+mkswap /dev/sdb2
+swapon /dev/sdb2
+mkfs.ext4 /dev/sda1
+mkfs.ext4 /dev/sdb1
+mkdir /mnt/home
+mount /dev/sda1 /mnt
+mount /dev/sdb1 /mnt/home
+pacstrap /mnt base base-devel parted btrfs-progs f2fs-tools ntp net-tools
+genfstab -U /mnt >> /mnt/etc/fstab
+arch-chroot /mnt
+ln -sf /usr/share/zoneinfo/America/Toronto /etc/localtime
+hwclock --systohc
+nano /etc/locale.gen Uncomment en_CA.UTF-8 UTF-8
+locale-gen
+nano /etc/hostname
+archlinux
+nano /etc/hosts
+127.0.1.1	archlinux.localdomain	archlinux
+mkinitcpio -p linux
+passwd
+pacman -S grub
+grub-install /dev/sda
+grub-mkconfig -o /boot/grub/grub.cfg
+Reboot
+localectl set-locale LANG=en_CA.UTF-8
+Reboot
+systemctl start dhcpcd.service
+pacman -S git gpm screen
+git clone git://github.com/Pednick/AUI
+useradd -m -G wheel -s /bin/bash lopov
+passwd lopov
+nano /etc/sudoers
+nano /etc/makepkg.conf
+nano /etc/pacman.conf
+pacman -S intel-ucode xorg xorg-server xf86-video-amdgpu lib32-mesa mesa-vdpau lib32-mesa-vdpau alsa-utils gst-libav gnome gnome-extra
+systemctl enable NetworkManager
+systemctl enable gdm
+mv AUI /home/lopov
+Exit and login as user
+git clone https://aur.archlinux.org/package-query.git
+cd package-query
+makepkg -si
+cd ..
+git clone https://aur.archlinux.org/yaourt.git
+cd yaourt
+makepkg -si
+cd ..
+yaourt google-chrome
+yaourt chrome-gnome-shell-git
+reboot and done
