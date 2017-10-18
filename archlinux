@@ -30,7 +30,7 @@ localectl set-locale LANG=en_CA.UTF-8
 Reboot
 systemctl start dhcpcd.service
 pacman -S git gpm screen
-git clone git://github.com/Pednick/AUI
+git clone git://github.com/Pednick/archlinux
 useradd -m -G wheel -s /bin/bash lopov
 passwd lopov
 nano /etc/sudoers
