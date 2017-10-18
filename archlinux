@@ -51,4 +51,10 @@ makepkg -si
 cd ..
 yaourt google-chrome
 yaourt chrome-gnome-shell-git
+[mesa-git]
+SigLevel = PackageOptional
+Server = http://pkgbuild.com/~lcarlier/$repo/$arch
+pacman -Sy
+pacman -S linux-amd-staging linux-amd-staging-headers
+update-grub
 reboot and done
