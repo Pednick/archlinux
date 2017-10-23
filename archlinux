@@ -39,6 +39,7 @@ nano /etc/pacman.conf
 pacman -S xorg-server xf86-video-amdgpu lib32-mesa mesa-vdpau lib32-mesa-vdpau alsa-utils gst-libav gnome gnome-extra
 systemctl enable NetworkManager
 systemctl enable gdm
+nano /etc/gdm/custom.conf uncomment #WaylandEnable=false
 mv archlinux /home/lopov
 Exit and login as user
 git clone https://aur.archlinux.org/package-query.git
