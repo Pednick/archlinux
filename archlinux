@@ -42,14 +42,10 @@ systemctl enable gdm
 nano /etc/gdm/custom.conf uncomment #WaylandEnable=false
 mv archlinux /home/lopov
 Exit and login as user
-git clone https://aur.archlinux.org/package-query.git
-cd package-query
-makepkg -si
-cd ..
-git clone https://aur.archlinux.org/yaourt.git
-cd yaourt
-makepkg -si
-cd ..
+sudo nano /etc/pacman.conf
+[archlinuxfr]
+SigLevel = Never
+Server = http://repo.archlinux.fr/$arch
 yaourt google-chrome
 yaourt chrome-gnome-shell-git
 reboot and done
