@@ -7,6 +7,7 @@ Add the -bindist USE flag to Openssh in /etc/portage/package.use and re-emerge i
 nano -w /etc/portage/package.use/iputils
 >=net-misc/openssh-7.5_p1-r1 -bindist
 emerge --ask --changed-use @world
+x11-libs/libcryptui: allow build with GnuPG 2.2
 emerge --ask gnome
 systemctl enable gdm.service
 emerge --ask --update --deep --newuse @world
