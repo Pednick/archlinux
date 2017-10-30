@@ -4,6 +4,8 @@ reboot
 emerge --ask x11-base/xorg-drivers
 emerge --ask glu glew
 Add the -bindist USE flag to Openssh in /etc/portage/package.use and re-emerge it with --newuse flag before installing GNOME.
+nano -w /etc/portage/package.use/iputils
+>=net-misc/openssh-7.5_p1-r1 -bindist
 emerge --ask --changed-use @world
 emerge --ask gnome
 systemctl enable gdm.service
