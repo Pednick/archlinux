@@ -10,6 +10,14 @@ nano -w /etc/portage/package.use/iputils
 emerge --ask --changed-use @world
 emerge --ask --update --deep --newuse @world
 emerge --ask gnome
+If libcryptui error:
+nano /etc/portage/make.conf
+ACCEPT_KEYWORDS="~amd64"
+emerge --ask libcryptui
+nano /etc/portage/package.mask/libcryptui
+=x11-libs/libcryptui-3.12.2
+emerge --ask --changed-use @world
+emerge --ask --update --deep --newuse @world
 systemctl enable gdm.service
 emerge --ask --update --deep --newuse @world
 emerge --ask alsa-utils
