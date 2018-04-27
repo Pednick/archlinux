@@ -19,6 +19,8 @@ locale-gen
 nano /etc/hostname
 archlinux
 nano /etc/hosts
+127.0.0.1	localhost
+::1		localhost
 127.0.1.1	archlinux.localdomain	archlinux
 mkinitcpio -p linux
 passwd
