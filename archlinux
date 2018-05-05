@@ -6,8 +6,8 @@ mkswap /dev/sdb2
 swapon /dev/sdb2
 mkfs.ext4 /dev/sda1
 mkfs.ext4 /dev/sdb1
-mkdir /mnt/home
 mount /dev/sda1 /mnt
+mkdir /mnt/home
 mount /dev/sdb1 /mnt/home
 pacstrap /mnt base base-devel parted btrfs-progs f2fs-tools ntp net-tools exfat-utils
 genfstab -U /mnt >> /mnt/etc/fstab
