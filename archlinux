@@ -9,6 +9,7 @@ mount /dev/sda1 /mnt
 pacstrap /mnt base base-devel parted btrfs-progs f2fs-tools ntp net-tools exfat-utils
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
+tar xzvf archiso-master.tar.gz
 ln -sf /usr/share/zoneinfo/America/Toronto /etc/localtime
 hwclock --systohc
 nano /etc/locale.gen Uncomment en_CA.UTF-8 UTF-8
