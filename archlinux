@@ -6,7 +6,7 @@ mkswap /dev/sda2
 swapon /dev/sda2
 mkfs.ext4 /dev/sda1
 mount /dev/sda1 /mnt
-pacstrap /mnt base arch-install-scripts b43-fwcutter broadcom-wl btrfs-progs clonezilla crda darkhttpd ddrescue dhclient dhcpcd dialog diffutils dmraid dnsmasq dnsutils dosfstools elinks ethtool exfat-utils f2fs-tools fsarchiver gnu-netcat gpm gptfdisk grml-zsh-config grub hdparm ipw2100-fw ipw2200-fw irssi iwd jfsutils lftp linux-atm linux-firmware lsscsi lvm2 man-db man-pages mc mdadm mtools nano ndisc6 netctl nfs-utils nilfs-utils nmap ntfs-3g ntp openconnect openssh openvpn partclone parted partimage ppp pptpclient refind-efi reiserfsprogs rp-pppoe rsync sdparm sg3_utils smartmontools sudo tcpdump testdisk usb_modeswitch usbutils vi vim-minimal vpnc wget wireless-regdb wireless_tools wpa_supplicant wvdial xfsprogs xl2tpd
+pacstrap /mnt base base-devel linux linux-firmware btrfs-progs exfat-utils dhclient dhcpcd nano
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
 ln -sf /usr/share/zoneinfo/America/Toronto /etc/localtime
@@ -36,11 +36,17 @@ nano /etc/sudoers
 nano /etc/makepkg.conf
 nano /etc/pacman.conf
 pacman -Sy
-pacman -S xorg-server lib32-mesa xf86-video-amdgpu libva-mesa-driver lib32-libva-mesa-driver libva-vdpau-driver mesa-vdpau lib32-mesa-vdpau alsa-utils gst-libav bc gnome gnome-extra
+pacman -S xorg-server lib32-mesa xf86-video-amdgpu libva-mesa-driver lib32-libva-mesa-driver libva-vdpau-driver mesa-vdpau lib32-mesa-vdpau alsa-utils gst-libav gst-plugins-ugly bijiben bc gnome gnome-extra
 systemctl enable NetworkManager
 systemctl enable gdm
 mv archlinux /home/lopov
 Exit and login as user
+If there's a problem installing yaourt:
+nano /etc.pacman.conf
+[archlinuxfr]
+SigLevel = Never
+Server = http://repo.archlinux.fr/$arch
+sudo pacman -S --needed base-devel git wget yajl
 git clone https://aur.archlinux.org/package-query.git
 cd package-query
 makepkg -si
