@@ -36,7 +36,7 @@ nano /etc/sudoers
 nano /etc/makepkg.conf
 nano /etc/pacman.conf
 pacman -Sy
-pacman -S xorg-server lib32-mesa xf86-video-amdgpu libva-mesa-driver lib32-libva-mesa-driver libva-vdpau-driver mesa-vdpau lib32-mesa-vdpau alsa-utils gst-libav gst-plugins-ugly mpv youtube-dl dvd+rw-tools dvdauthor pavucontrol bijiben gparted handbrake xclip bc gnome gnome-extra
+pacman -S xorg-server lib32-mesa xf86-video-amdgpu libva-mesa-driver lib32-libva-mesa-driver libva-vdpau-driver mesa-vdpau lib32-mesa-vdpau alsa-utils gst-libav gst-plugins-ugly mpv youtube-dl dvd+rw-tools dvdauthor pavucontrol bijiben gparted handbrake xclip filezilla openshot transmission-gtk bc gnome gnome-extra
 systemctl enable NetworkManager
 systemctl enable gdm
 mv archlinux /home/lopov
