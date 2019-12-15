@@ -41,20 +41,11 @@ systemctl enable NetworkManager
 systemctl enable gdm
 mv archlinux /home/lopov
 Exit and login as user
-If there's a problem installing yaourt:
-nano /etc.pacman.conf
-[archlinuxfr]
-SigLevel = Never
-Server = http://repo.archlinux.fr/$arch
-sudo pacman -S --needed base-devel git wget yajl
-git clone https://aur.archlinux.org/package-query.git
-cd package-query
+git clone https://aur.archlinux.org/yay.git
+cd yay
 makepkg -si
 cd ..
-git clone https://aur.archlinux.org/yaourt.git
-cd yaourt
-makepkg -si
-cd ..
-yaourt google-chrome
-yaourt chrome-gnome-shell-git
+yay -S google-chrome
+yay -S chrome-gnome-shell-git
+yay -S ffmpeg-normalize
 reboot and done
