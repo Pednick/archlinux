@@ -46,6 +46,7 @@ cp /mnt/gentoo/usr/share/portage/config/repos.conf /mnt/gentoo/etc/portage/repos
 
 cp --dereference /etc/resolv.conf /mnt/gentoo/etc/
 
+
 mount --types proc /proc /mnt/gentoo/proc
 
 mount --rbind /sys /mnt/gentoo/sys
