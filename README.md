@@ -10,12 +10,6 @@ https://wiki.gentoo.org/wiki/ALSA#Hardware_detection
 
 localectl set-locale LANG=en_CA.UTF-8
 
-ln -sf /proc/self/mounts /etc/mtab
-
-systemctl enable dhcpcd.service
-
-systemctl start dhcpcd.service
-
 dispatch-conf
 
 mkdir /mnt/gentoo
@@ -78,7 +72,7 @@ blkid
 
 nano -w /etc/fstab
 
-UUID=5a2f652b-415b-40d5-9c85-000586f46255       /               ext4            rw,relatime     0 1
+UUID=5a2f652b-415b-40d5-9c85-000586f46255       /               ext4            defaults,noatime,discard    0 1
 
 lspci | grep -i VGA
 
@@ -114,7 +108,9 @@ Device Drivers  --->
         
           -*- Firmware loading facility
           
-          (amdgpu/fiji_ce.bin amdgpu/fiji_mc.bin amdgpu/fiji_me.bin amdgpu/fiji_mec2.bin amdgpu/fiji_mec.bin amdgpu/fiji_pfp.bin amdgpu/fiji_rlc.bin amdgpu/fiji_sdma1.bin amdgpu/fiji_sdma.bin amdgpu/fiji_smc.bin amdgpu/fiji_uvd.bin amdgpu/fiji_vce.bin) 
+amdgpu/fiji_ce.bin amdgpu/fiji_mc.bin amdgpu/fiji_me.bin amdgpu/fiji_mec2.bin amdgpu/fiji_mec.bin amdgpu/fiji_pfp.bin 
+
+amdgpu/fiji_rlc.bin amdgpu/fiji_sdma1.bin amdgpu/fiji_sdma.bin amdgpu/fiji_smc.bin amdgpu/fiji_uvd.bin amdgpu/fiji_vce.bin
           
           Build named firmware blobs into the kernel
           (/lib/firmware) Firmware blobs root directory
@@ -134,7 +130,7 @@ emerge --ask media-sound/alsa-utils net-misc/networkmanager net-misc/dhcpc sys-l
 
 systemctl enable NetworkManager
 
-systemctl start dhcpcd.service
+systemctl enable dhcpcd.service
 
 USE="ffmpeg" emerge -q media-plugins/alsa-plugins
 
