@@ -18,9 +18,11 @@ mount /dev/sdc1 /mnt/gentoo
 
 cd /mnt/gentoo
 
-links https://www.gentoo.org/downloads/mirrors/
+https://www.gentoo.org/downloads/
 
-Move to the releases/amd64/autobuilds/ directory
+Stage 3 systemd2020-03-26 349 MiB
+
+wget https://bouncer.gentoo.org/fetch/root/all/releases/amd64/autobuilds/20200326/systemd/stage3-amd64-systemd-20200326.tar.bz2
 
 tar xpvf stage3-*.tar.bz2 --xattrs-include='*.*' --numeric-owner
 
@@ -30,7 +32,7 @@ ABI_X86="32 64"
 
 MAKEOPTS="-j4"
 
-VIDEO_CARDS="amdgpu radeonsi"
+VIDEO_CARDS="amdgpu radeonsi radeon"
 
 mirrorselect -i -o >> /mnt/gentoo/etc/portage/make.conf
 
@@ -64,15 +66,15 @@ emerge --sync
 
 eselect profile list
 
-eselect profile set 
-
-emerge --ask --update --deep --newuse @world
+eselect profile set 29
 
 blkid
 
 nano -w /etc/fstab
 
-UUID=5a2f652b-415b-40d5-9c85-000586f46255       /               ext4            defaults,noatime,discard    0 1
+UUID=5a2f652b-415b-40d5-9c85-000586f46255       /               ext4            defaults,noatime    0 1
+
+emerge --ask --update --deep --newuse @world
 
 lspci | grep -i VGA
 
@@ -107,14 +109,21 @@ Device Drivers  --->
         Firmware loader --->
         
           -*- Firmware loading facility
-          
-amdgpu/fiji_ce.bin amdgpu/fiji_mc.bin amdgpu/fiji_me.bin amdgpu/fiji_mec2.bin amdgpu/fiji_mec.bin amdgpu/fiji_pfp.bin 
 
-amdgpu/fiji_rlc.bin amdgpu/fiji_sdma1.bin amdgpu/fiji_sdma.bin amdgpu/fiji_smc.bin amdgpu/fiji_uvd.bin amdgpu/fiji_vce.bin
+user $echo amdgpu/fiji_{ce,mc,me,mec2,mec,pfp,rlc,sdma1,sdma,smc,uvd,vce}.bin
+          
+amdgpu/fiji_ce.bin amdgpu/fiji_mc.bin amdgpu/fiji_me.bin amdgpu/fiji_mec2.bin amdgpu/fiji_mec.bin amdgpu/fiji_pfp.bin amdgpu/fiji_rlc.bin amdgpu/fiji_sdma1.bin amdgpu/fiji_sdma.bin amdgpu/fiji_smc.bin amdgpu/fiji_uvd.bin amdgpu/fiji_vce.bin
           
           Build named firmware blobs into the kernel
           (/lib/firmware) Firmware blobs root directory
+
 ln -sf /proc/self/mounts /etc/mtab
+
+emerge --ask sys-apps/systemd
+
+emerge --ask net-misc/dhcpcd
+
+systemctl enable dhcpcd.service
 
 emerge --ask app-portage/gentoolkit
 
@@ -126,11 +135,9 @@ After setting this be sure to update the system so the changes take effect:
 
 emerge --ask --changed-use --deep @world
 
-emerge --ask media-sound/alsa-utils net-misc/networkmanager net-misc/dhcpc sys-libs/gpm www-client/links app-misc/screen
+emerge --ask media-sound/alsa-utils net-misc/networkmanager
 
 systemctl enable NetworkManager
-
-systemctl enable dhcpcd.service
 
 USE="ffmpeg" emerge -q media-plugins/alsa-plugins
 
@@ -159,6 +166,8 @@ umount -l /mnt/gentoo/dev{/shm,/pts,}
 umount -R /mnt/gentoo
 
 reboot
+
+emerge --ask sys-libs/gpm www-client/links app-misc/screen
 
 systemctl start gpm
 
