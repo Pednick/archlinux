@@ -8,13 +8,13 @@ https://github.com/Pednick/archlinux
 
 https://wiki.gentoo.org/wiki/ALSA#Hardware_detection
 
-localectl set-locale LANG=en_CA.UTF-8
-
 dispatch-conf
+
+mkfs.ext4 -E stride=128,stripe-width=128 /dev/sda1
 
 mkdir /mnt/gentoo
 
-mount /dev/sdc1 /mnt/gentoo
+mount /dev/sda1 /mnt/gentoo
 
 cd /mnt/gentoo
 
@@ -32,7 +32,13 @@ ABI_X86="32 64"
 
 MAKEOPTS="-j4"
 
-VIDEO_CARDS="amdgpu radeonsi radeon"
+VIDEO_CARDS="amdgpu radeonsi"
+
+blkid
+
+nano -w /mnt/gentoo/etc/fstab
+
+UUID=fce2c572-f3e5-42cd-892b-e528497949cf	/         	ext4      	defaults,relatime,discard	0 1
 
 mirrorselect -i -o >> /mnt/gentoo/etc/portage/make.conf
 
@@ -64,16 +70,6 @@ emerge-webrsync
 
 emerge --sync
 
-eselect profile list
-
-eselect profile set 29
-
-blkid
-
-nano -w /etc/fstab
-
-UUID=5a2f652b-415b-40d5-9c85-000586f46255       /               ext4            defaults,noatime    0 1
-
 emerge --ask --update --deep --newuse @world
 
 lspci | grep -i VGA
@@ -83,13 +79,11 @@ When using AMDGPU, it is recommended to unset the ATI Radeon option so that the 
 
 emerge --ask sys-kernel/gentoo-sources
 
-ls -l /usr/src/linux
-
-emerge --ask sys-kernel/genkernel-next
-
 emerge --ask sys-kernel/linux-firmware
 
-genkernel --menuconfig all
+emerge --ask sys-kernel/genkernel
+
+genkernel all
 
 Gentoo Linux --->
 
@@ -123,19 +117,9 @@ emerge --ask sys-apps/systemd
 
 emerge --ask net-misc/dhcpcd
 
-systemctl enable dhcpcd.service
-
-emerge --ask app-portage/gentoolkit
-
 lspci | grep -i audio
 
-euse -E alsa networkmanager
-
-After setting this be sure to update the system so the changes take effect:
-
-emerge --ask --changed-use --deep @world
-
-emerge --ask media-sound/alsa-utils net-misc/networkmanager
+emerge --ask media-sound/alsa-utils
 
 systemctl enable NetworkManager
 
@@ -153,7 +137,7 @@ nano -w /etc/default/grub
 
 GRUB_CMDLINE_LINUX="init=/lib/systemd/systemd"
 
-grub-install /dev/sdc
+grub-install /dev/sda
 
 grub-mkconfig -o /boot/grub/grub.cfg
 
