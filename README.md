@@ -10,6 +10,8 @@ https://wiki.gentoo.org/wiki/ALSA#Hardware_detection
 
 dispatch-conf
 
+tune2fs -o discard /dev/sdXY
+
 mkfs.ext4 -E stride=128,stripe-width=128 /dev/sda1
 
 mkdir /mnt/gentoo
