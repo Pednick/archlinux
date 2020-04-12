@@ -10,6 +10,13 @@ https://wiki.gentoo.org/wiki/ALSA#Hardware_detection
 
 dispatch-conf
 
+
+passwd lopov
+
+rm /stage3-*.tar.*
+
+localectl set-locale LANG=en_CA.UTF-8
+
 mkfs.ext4 -E stride=128,stripe-width=128 /dev/sda1
 
 mkdir /mnt/gentoo
@@ -121,8 +128,6 @@ lspci | grep -i audio
 
 emerge --ask media-sound/alsa-utils
 
-systemctl enable NetworkManager
-
 USE="ffmpeg" emerge -q media-plugins/alsa-plugins
 
 USE="a52 dts" emerge -q media-video/mplayer
@@ -162,3 +167,35 @@ passwd lopov
 rm /stage3-*.tar.*
 
 localectl set-locale LANG=en_CA.UTF-8
+
+emerge --ask x11-base/xorg-server
+
+Check startx
+In order to check the x server install x11-terms/xterm and x11-terms/twm:
+
+root #emerge --ask x11-terms/xterm x11-wm/twm
+Then use the following command:
+
+root #startx
+If everything is correct, a graphic page with some terminals inside will appear. Quit by pressing Ctrl+Alt+Del and remove x11-terms/xterm and x11-terms/twm:
+
+root #emerge --ask --depclean --verbose x11-terms/xterm x11-wm/twm
+
+emerge --ask gnome
+
+systemctl enable gdm.service
+
+systemctl enable NetworkManager
+
+AMDGPU/RadeonSI drivers do not work
+If the graphics card is not supported by including amdgpu and radeonsi alone in VIDEO_CARDS, try adding radeon to make.conf's VIDEO_CARDS definition. For example:
+
+FILE /etc/portage/make.conf
+VIDEO_CARDS="amdgpu radeonsi radeon"
+After the values have been set update the system so the changes take effect:
+
+root #emerge --ask --changed-use --deep @world
+
+nano -w /etc/portage/make.conf
+
+USE="aqua wayland X egl gles2 opengl alsa gtk ffmpeg a52 dts"
