@@ -10,6 +10,8 @@ https://wiki.gentoo.org/wiki/ALSA#Hardware_detection
 
 dispatch-conf
 
+hdparm --user-master u --security-erase PasSWorD /dev/sda
+
 blkdiscard /dev/sdX
 
 tune2fs -o discard /dev/sdXY
