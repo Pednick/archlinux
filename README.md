@@ -10,13 +10,6 @@ https://wiki.gentoo.org/wiki/ALSA#Hardware_detection
 
 dispatch-conf
 
-
-passwd lopov
-
-rm /stage3-*.tar.*
-
-localectl set-locale LANG=en_CA.UTF-8
-
 mkfs.ext4 -E stride=128,stripe-width=128 /dev/sda1
 
 mkdir /mnt/gentoo
@@ -29,9 +22,9 @@ https://www.gentoo.org/downloads/
 
 Stage 3 systemd2020-03-26 349 MiB
 
-wget https://bouncer.gentoo.org/fetch/root/all/releases/amd64/autobuilds/20200326/systemd/stage3-amd64-systemd-20200326.tar.bz2
+wget https://bouncer.gentoo.org/fetch/root/all/releases/amd64/autobuilds/20200401T214502Z/stage3-amd64-20200401T214502Z.tar.xz
 
-tar xpvf stage3-*.tar.bz2 --xattrs-include='*.*' --numeric-owner
+tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner
 
 nano -w /mnt/gentoo/etc/portage/make.conf
 
@@ -88,7 +81,9 @@ emerge --ask sys-kernel/gentoo-sources
 
 emerge --ask sys-kernel/linux-firmware
 
-emerge --ask sys-kernel/genkernel
+emerge --ask sys-kernel/genkernel-next
+
+genkernel --menuconfig all
 
 genkernel all
 
@@ -120,9 +115,11 @@ amdgpu/fiji_ce.bin amdgpu/fiji_mc.bin amdgpu/fiji_me.bin amdgpu/fiji_mec2.bin am
 
 ln -sf /proc/self/mounts /etc/mtab
 
-emerge --ask sys-apps/systemd
-
 emerge --ask net-misc/dhcpcd
+
+emerge --ask sys-libs/gpm www-client/links app-misc/screen
+
+emerge --ask sys-apps/systemd
 
 lspci | grep -i audio
 
@@ -156,8 +153,6 @@ umount -R /mnt/gentoo
 
 reboot
 
-emerge --ask sys-libs/gpm www-client/links app-misc/screen
-
 systemctl start gpm
 
 useradd -m -G users,wheel,audio -s /bin/bash lopov
@@ -186,16 +181,3 @@ emerge --ask gnome
 systemctl enable gdm.service
 
 systemctl enable NetworkManager
-
-AMDGPU/RadeonSI drivers do not work
-If the graphics card is not supported by including amdgpu and radeonsi alone in VIDEO_CARDS, try adding radeon to make.conf's VIDEO_CARDS definition. For example:
-
-FILE /etc/portage/make.conf
-VIDEO_CARDS="amdgpu radeonsi radeon"
-After the values have been set update the system so the changes take effect:
-
-root #emerge --ask --changed-use --deep @world
-
-nano -w /etc/portage/make.conf
-
-USE="aqua wayland X egl gles2 opengl alsa gtk ffmpeg a52 dts"
