@@ -1,0 +1,198 @@
+hdparm --user-master u --security-erase PasSWorD /dev/sda
+
+blkdiscard /dev/sdX
+
+tune2fs -o discard /dev/sdXY
+
+mkfs.ext4 -E stride=128,stripe-width=128 /dev/sda1
+
+mkdir /mnt/gentoo
+
+mount /dev/sda1 /mnt/gentoo
+
+cd /mnt/gentoo
+
+https://www.gentoo.org/downloads/
+
+Stage 3 systemd2020-03-26 349 MiB
+
+wget 
+
+links https://www.gentoo.org/downloads/mirrors/
+
+tar xpvf stage3-*.tar.bz2 --xattrs-include='*.*' --numeric-owner
+
+nano -w /mnt/gentoo/etc/portage/make.conf
+
+ABI_X86="32 64"
+
+MAKEOPTS="-j4"
+
+VIDEO_CARDS="amdgpu radeonsi"
+
+USE="X aqua egl wayland gtk udev alsa ffmpeg a52 dts"
+
+blkid
+
+nano -w /mnt/gentoo/etc/fstab
+
+UUID=6bb55d0a-19ca-49d8-85d2-263d9e8997bf	/         	ext4      	rw,relatime,stripe=128	0 1
+
+mirrorselect -i -o >> /mnt/gentoo/etc/portage/make.conf
+
+mkdir --parents /mnt/gentoo/etc/portage/repos.conf
+
+cp /mnt/gentoo/usr/share/portage/config/repos.conf /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
+
+cp --dereference /etc/resolv.conf /mnt/gentoo/etc/
+
+mount to chroot
+
+mount --types proc /proc /mnt/gentoo/proc
+
+mount --rbind /sys /mnt/gentoo/sys
+
+mount --make-rslave /mnt/gentoo/sys
+
+mount --rbind /dev /mnt/gentoo/dev
+
+mount --make-rslave /mnt/gentoo/dev
+
+chroot /mnt/gentoo /bin/bash
+
+source /etc/profile
+
+export PS1="(chroot) ${PS1}"
+
+emerge-webrsync
+
+emerge --sync
+
+eselect profile list
+
+eselect profile set 
+
+emerge --ask --update --deep --newuse @world
+
+lspci | grep -i VGA
+
+For ease of installation, it is recommended to choose "AMD GPU" as a module (M)
+When using AMDGPU, it is recommended to unset the ATI Radeon option so that the radeon module is not built.
+
+emerge --ask sys-kernel/gentoo-sources
+
+emerge --ask sys-kernel/linux-firmware
+
+emerge --ask sys-kernel/genkernel
+
+genkernel --menuconfig all
+
+genkernel all
+
+Gentoo Linux --->
+
+        Support for init systems, system and service managers --->
+                [*]Openrc 
+                
+                [*] systemd
+                
+Graphics support  --->
+
+<M> AMD GPU
+
+Device Drivers  --->
+
+    Generic Driver Options  --->
+    
+        Firmware loader --->
+        
+          -*- Firmware loading facility
+
+user $echo amdgpu/fiji_{ce,mc,me,mec2,mec,pfp,rlc,sdma1,sdma,smc,uvd,vce}.bin
+          
+amdgpu/fiji_ce.bin amdgpu/fiji_mc.bin amdgpu/fiji_me.bin amdgpu/fiji_mec2.bin amdgpu/fiji_mec.bin amdgpu/fiji_pfp.bin amdgpu/fiji_rlc.bin amdgpu/fiji_sdma1.bin amdgpu/fiji_sdma.bin amdgpu/fiji_smc.bin amdgpu/fiji_uvd.bin amdgpu/fiji_vce.bin
+          
+          Build named firmware blobs into the kernel
+          (/lib/firmware) Firmware blobs root directory
+
+ln -sf /proc/self/mounts /etc/mtab
+
+emerge --ask net-misc/dhcpcd
+
+emerge --ask sys-libs/gpm www-client/links app-misc/screen
+
+emerge --ask sys-apps/systemd
+
+lspci | grep -i audio
+
+emerge --ask media-sound/alsa-utils
+
+USE="ffmpeg" emerge -q media-plugins/alsa-plugins
+
+USE="a52 dts" emerge -q media-video/mplayer
+
+passwd
+
+emerge --ask sys-boot/grub:2
+
+nano -w /etc/default/grub
+
+# Append parameters to the linux kernel command line
+
+GRUB_CMDLINE_LINUX="init=/lib/systemd/systemd"
+
+grub-install /dev/sda
+
+grub-mkconfig -o /boot/grub/grub.cfg
+
+exit
+
+cd
+
+umount -l /mnt/gentoo/dev{/shm,/pts,}
+
+umount -R /mnt/gentoo
+
+reboot
+
+systemctl start gpm
+
+useradd -m -G users,wheel,audio -s /bin/bash lopov
+
+passwd lopov
+
+rm /stage3-*.tar.*
+
+localectl set-locale LANG=en_CA.UTF-8
+
+emerge --ask x11-base/xorg-server
+
+Check startx
+In order to check the x server install x11-terms/xterm and x11-terms/twm:
+
+root #emerge --ask x11-terms/xterm x11-wm/twm
+Then use the following command:
+
+root #startx
+If everything is correct, a graphic page with some terminals inside will appear. Quit by pressing Ctrl+Alt+Del and remove x11-terms/xterm and x11-terms/twm:
+
+root #emerge --ask --depclean --verbose x11-terms/xterm x11-wm/twm
+
+emerge --ask gnome
+
+systemctl enable gdm.service
+
+systemctl enable NetworkManager
+
+AMDGPU/RadeonSI drivers do not work
+If the graphics card is not supported by including amdgpu and radeonsi alone in VIDEO_CARDS, try adding radeon to make.conf's VIDEO_CARDS definition. For example:
+
+FILE /etc/portage/make.conf
+VIDEO_CARDS="amdgpu radeonsi radeon"
+After the values have been set update the system so the changes take effect:
+
+root #emerge --ask --changed-use --deep @world
+
+nano -w /etc/portage/make.conf
+
+USE="aqua wayland X egl gles2 opengl alsa gtk ffmpeg a52 dts"
