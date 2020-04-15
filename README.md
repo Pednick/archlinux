@@ -165,7 +165,7 @@ useradd -m -G users,wheel,audio -s /bin/bash lopov
 
 passwd lopov
 
-rm /stage3-*.tar.*
+"rm /stage3-*.tar.*"
 
 localectl set-locale LANG=en_CA.UTF-8
 
