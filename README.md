@@ -184,6 +184,6 @@ root #emerge --ask --depclean --verbose x11-terms/xterm x11-wm/twm
 
 emerge --ask gnome
 
-systemctl enable gdm.service
-
 systemctl enable NetworkManager
+
+systemctl enable gdm.service
