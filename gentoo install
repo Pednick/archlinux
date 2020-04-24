@@ -1,0 +1,133 @@
+hdparm --user-master u --security-erase PasSWorD /dev/sda
+
+blkdiscard /dev/sdX
+
+mkfs.ext4 -E stride=128,stripe-width=128 /dev/sda1
+
+tune2fs -o discard /dev/sdXY
+
+mkdir /mnt/gentoo
+
+mount /dev/sda1 /mnt/gentoo
+
+cd /mnt/gentoo
+
+links https://www.gentoo.org/downloads/mirrors/
+
+tar xpvf stage3-*.tar.bz2 --xattrs-include='*.*' --numeric-owner
+
+nano -w /mnt/gentoo/etc/portage/make.conf
+
+ACCEPT_KEYWORDS="~amd64"
+
+ACCEPT_LICENSE="*"
+
+MAKEOPTS="-j4"
+
+VIDEO_CARDS="amdgpu radeonsi"
+
+USE="X aqua gles2 opengl egl wayland d3d9 gtk alsa ffmpeg a52 dts user-session"
+
+blkid
+
+nano -w /mnt/gentoo/etc/fstab
+
+UUID=6bb55d0a-19ca-49d8-85d2-263d9e8997bf	/         	ext4      	rw,relatime,stripe=128	0 1
+
+mirrorselect -i -o >> /mnt/gentoo/etc/portage/make.conf
+
+mkdir --parents /mnt/gentoo/etc/portage/repos.conf
+
+cp /mnt/gentoo/usr/share/portage/config/repos.conf /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
+
+cp --dereference /etc/resolv.conf /mnt/gentoo/etc/
+
+mount to chroot
+
+mount --types proc /proc /mnt/gentoo/proc
+
+mount --rbind /sys /mnt/gentoo/sys
+
+mount --make-rslave /mnt/gentoo/sys
+
+mount --rbind /dev /mnt/gentoo/dev
+
+mount --make-rslave /mnt/gentoo/dev
+
+chroot /mnt/gentoo /bin/bash
+
+source /etc/profile
+
+export PS1="(chroot) ${PS1}"
+
+emerge-webrsync
+
+emerge --sync
+
+emerge --ask --update --deep --newuse @world
+
+emerge --ask sys-kernel/linux-firmware
+
+emerge --ask sys-kernel/gentoo-kernel-bin
+
+emerge --ask media-sound/alsa-utils
+
+emerge -q media-plugins/alsa-plugins media-video/mpv
+
+emerge --ask app-admin/sudo dev-vcs/git app-portage/repoman net-misc/dhcpcd sys-libs/gpm www-client/links app-misc/screen
+
+passwd
+
+emerge --ask sys-boot/grub:2
+
+nano -w /etc/default/grub
+
+# Append parameters to the linux kernel command line
+
+GRUB_CMDLINE_LINUX="init=/lib/systemd/systemd"
+
+grub-install /dev/sda
+
+grub-mkconfig -o /boot/grub/grub.cfg
+
+exit
+
+cd
+
+umount -l /mnt/gentoo/dev{/shm,/pts,}
+
+umount -R /mnt/gentoo
+
+reboot
+
+systemctl start dhcpcd
+
+systemctl start gpm
+
+useradd -m -G users,wheel,audio -s /bin/bash lopov
+
+passwd lopov
+
+rm /stage3-*.tar.*
+
+localectl set-locale LANG=en_CA.UTF-8
+
+emerge --ask x11-base/xorg-x11
+
+emerge --ask gnome
+
+systemctl enable NetworkManager
+
+systemctl enable gdm.service
+
+nano -w /etc/portage/make.conf
+
+nano -w /var/log/Xorg.0.log
+
+CHOST="x86_64-pc-linux-gnu"
+
+media-video/mpv
+
+media-plugins/alsa-plugins
+
+media-sound/pulseaudio
