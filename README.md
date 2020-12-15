@@ -14,3 +14,5 @@ dispatch-conf
 systemctl enable NetworkManager
 
 systemctl enable gdm.service
+
+https://github.com/Dlackware/gnome/wiki/Install
