@@ -1,0 +1,21 @@
+Tracking the Current Branch
+To track the Current branch, it is recommended that you
+
+cleanly install or upgrade your installation to the latest stable version first, following the instructions and information in the appropriate UPGRADE.TXT and CHANGES_AND_HINTS.TXT files found on the CD/DVD or the Slackware Linux online mirror.
+edit the /etc/slackpkg/mirrors file and comment out the mirror pointing to your stable version and uncomment one of the mirrors pointing to the current branch. For example, if you're using the Switzerland mirror and currently on the 13.37 stable release for Slackware 64-bit, then comment out the line
+# http://mirror.switch.ch/ftp/mirror/slackware/slackware64-13.37/
+and uncomment the line
+
+ http://mirror.switch.ch/ftp/pool/3/mirror/slackware/slackware64-current/
+or any other mirror point to the -current branch.
+
+run the command (as root)
+slackpkg update
+
+Full system upgrade
+To perform a full system upgrade, please follow these steps (as root user):
+
+slackpkg update
+slackpkg install-new
+slackpkg upgrade-all
+slackpkg clean-system
