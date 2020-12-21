@@ -1,21 +1,28 @@
-Tracking the Current Branch
-To track the Current branch, it is recommended that you
+System Startup
+The first program to run under Slackware besides the Linux kernel is init. This program reads /etc/inittab file to see how to run the system. It runs the /etc/rc.d/rc.S script to prepare the system before going into your desired runlevel. The rc.S file enables your virtual memory, mounts your filesystems, cleans up certain log directories, initializes Plug and Play devices, loads kernel modules, configures PCMCIA devices, sets up serial ports, and runs System V init scripts (if found). There are some scripts in /etc/rc.d that rc.S will call on to complete its work:
 
-cleanly install or upgrade your installation to the latest stable version first, following the instructions and information in the appropriate UPGRADE.TXT and CHANGES_AND_HINTS.TXT files found on the CD/DVD or the Slackware Linux online mirror.
-edit the /etc/slackpkg/mirrors file and comment out the mirror pointing to your stable version and uncomment one of the mirrors pointing to the current branch. For example, if you're using the Switzerland mirror and currently on the 13.37 stable release for Slackware 64-bit, then comment out the line
-# http://mirror.switch.ch/ftp/mirror/slackware/slackware64-13.37/
-and uncomment the line
+rc.S	This is the actual system initialization script.
+rc.acpid	Starts the acpi daemon
+rc.hotplug	This script starts hotpluggable subsystems
+rc.modules	Loads kernel modules. Things like your network card, PPP support, and other things are loaded here. If this script finds rc.netdevice, it will run that as well.
+rc.pcmcia	Probes for and configures any PCMCIA devices that you might have on your system. This is most useful for laptop users, who probably have a PCMCIA modem or network card.
+rc.serial	Configures your serial ports by running the appropriate setserial commands.
+rc.sysvinit	Looks for System V init scripts for the desired runlevel and runs them. This is discussed more in detail below.
 
- http://mirror.switch.ch/ftp/pool/3/mirror/slackware/slackware64-current/
-or any other mirror point to the -current branch.
+Runlevels
+After system initialization is complete, init moves on to runlevel initialization. A runlevel describes the state that your machine will be running in. Sound redundant? Well, the runlevel tells init if you will be accepting multiuser logins or just a single user, whether or not you want network services, and if you will be using the X Window System or agetty to handle logins. The files below define the different runlevels in Slackware Linux.
 
-run the command (as root)
-slackpkg update
+rc.0	Halt the system (runlevel 0). By default, this is symlinked to rc.6.
+rc.4	Multiuser startup (runlevel 4), but in X11 with KDM, GDM, or XDM as the login manager.
+rc.6	Reboot the system (runlevel 6).
+rc.K	Startup in single user mode (runlevel 1).
+rc.M	Multiuser mode (runlevel 2 and 3), but with the standard text-based login. This is the default runlevel in Slackware.
 
-Full system upgrade
-To perform a full system upgrade, please follow these steps (as root user):
+Adding a User
+Slackware Linux makes adding a new user easy. All you have to do is run the /usr/sbin/adduser script. It will present you with a series of questions and then it will complete all of the necessary steps to get the account working.
 
-slackpkg update
-slackpkg install-new
-slackpkg upgrade-all
-slackpkg clean-system
+After the account is setup, you can use the following programs to manage the account:
+
+/usr/bin/passwd - Changes the password.
+/usr/bin/chfn - Changes the finger information.
+/usr/bin/chsh - Changes the user's login shell.
