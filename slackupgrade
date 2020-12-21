@@ -26,3 +26,5 @@ After the account is setup, you can use the following programs to manage the acc
 /usr/bin/passwd - Changes the password.
 /usr/bin/chfn - Changes the finger information.
 /usr/bin/chsh - Changes the user's login shell.
+
+type "startx"
