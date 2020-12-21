@@ -28,3 +28,7 @@ After the account is setup, you can use the following programs to manage the acc
 /usr/bin/chsh - Changes the user's login shell.
 
 type "startx"
+
+# installpkg PackageKit-0.8.17-x86_64-3dl_install.txz
+# pkcon refresh force
+# pkcon install dropline
