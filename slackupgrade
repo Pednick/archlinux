@@ -27,7 +27,7 @@ After the account is setup, you can use the following programs to manage the acc
 /usr/bin/chfn - Changes the finger information.
 /usr/bin/chsh - Changes the user's login shell.
 
-type "startx"
+type "init 4"
 
 # installpkg PackageKit-0.8.17-x86_64-3dl_install.txz
 # pkcon refresh force
