@@ -1,3 +1,5 @@
+https://www.youtube.com/redirect?event=video_description&v=_rnQfjwOZds&redir_token=QUFFLUhqbUxiRThlZHZRX1g1RTJScUduU1QtT25mTTVqQXxBQ3Jtc0trTmIyR3RjemluTmdPa0NzaWREaXhMZTVBZHJva3R1ZklRV05nRDhIWHA0RUh2NnV3ajdRZE5OMVNScW1RbGhIYk1JSFBWR3ZNendxQVlmNGZ1Q1ppYnNSR3p4NVhZVXhES0ZzNF95SjVQaXhEZW9lZw%3D%3D&q=https%3A%2F%2Fraw.githubusercontent.com%2Fslackernetuk%2Fslack-desk%2Fmaster%2Fscripts%2Finstall-gnome.sh
+
 https://wiki.gentoo.org/wiki/Handbook:AMD64
 
 https://wiki.gentoo.org/wiki/Systemd/Installing_Gnome3_from_scratch
