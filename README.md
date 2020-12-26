@@ -17,6 +17,4 @@ systemctl enable NetworkManager
 
 systemctl enable gdm.service
 
-https://github.com/Dlackware/gnome/wiki/Install
-
 https://docs.slackware.com/howtos:slackware_admin:grub_on_first_install
