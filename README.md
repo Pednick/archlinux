@@ -16,5 +16,3 @@ dispatch-conf
 systemctl enable NetworkManager
 
 systemctl enable gdm.service
-
-https://docs.slackware.com/howtos:slackware_admin:grub_on_first_install
