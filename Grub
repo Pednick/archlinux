@@ -12,8 +12,6 @@ For virtual box to boot on UEFI you also need to copy grub to a new directory:
 mkdir -p /boot/efi/EFI/boot # -p option creates any intermediate directories
 cp /boot/efi/EFI/grub/grubx64.efi /boot/efi/EFI/boot/bootx64.efi
 
-/usr/sbin/adduser
-
-log in user
+/usr/sbin/adduser log in as user
 
 startx
