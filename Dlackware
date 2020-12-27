@@ -9,13 +9,13 @@ Alternative we have developed a build system that makes everything easier. It re
 Download and install the build system:
 git clone https://github.com/Dlackware/dlackware
 cd dlackware
-git checkout 0.3
+git checkout master
 ./dlackware.SlackBuild
 upgradepkg --install-new /var/cache/dlackware/dlackware-*-noarch-*_dlack.txz
 Download build scripts:
 git clone https://github.com/Dlackware/gnome
 cd gnome
-git checkout 3.22/14.2
+git checkout master
 git submodule update --init
 Configure the build system
 Edit /etc/dlackware.conf and set DLACK_REPOS_ROOT to the directory with the cloned gnome repository.
