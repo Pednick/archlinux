@@ -16,3 +16,5 @@ dispatch-conf
 systemctl enable NetworkManager
 
 systemctl enable gdm.service
+
+https://nixos.org/manual/nixos/stable/index.html#sec-installation
