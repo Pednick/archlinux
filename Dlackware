@@ -16,6 +16,7 @@ Download build scripts:
 git clone https://github.com/Dlackware/gnome
 cd gnome
 git checkout 3.22/14.2
+git checkout master
 git submodule update --init
 Configure the build system
 Edit /etc/dlackware.conf and set DLACK_REPOS_ROOT to the directory with the cloned gnome repository.
