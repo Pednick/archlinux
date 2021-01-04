@@ -1,6 +1,6 @@
 setfont latarcyrheb-sun32.psfu.gz
 mount -o remount,size=2G /run/archiso/cowspace
-mkfs.ext4 /dev/sda1
+mkfs -v -t ext4 /dev/sda1
 mount /dev/sda1 /mnt
 pacstrap /mnt base base-devel linux linux-firmware btrfs-progs dosfstools exfatprogs exfat-utils f2fs-tools e2fsprogs jfsutils nilfs-utils ntfs-3g reiserfsprogs udftools xfsprogs networkmanager nano
 genfstab -U /mnt >> /mnt/etc/fstab
