@@ -1,5 +1,4 @@
 setfont latarcyrheb-sun32.psfu.gz
-mount -o remount,size=2G /run/archiso/cowspace
 mkfs -v -t ext4 /dev/sda1
 mount /dev/sda1 /mnt
 pacstrap /mnt base base-devel linux linux-firmware btrfs-progs dosfstools exfatprogs exfat-utils f2fs-tools e2fsprogs jfsutils nilfs-utils ntfs-3g reiserfsprogs udftools xfsprogs networkmanager nano
@@ -32,7 +31,7 @@ nano /etc/sudoers
 nano /etc/makepkg.conf
 nano /etc/pacman.conf
 pacman -Sy
-pacman -S xorg-server vulkan-icd-loader lib32-vulkan-icd-loader vulkan-radeon amdvlk alsa-utils gst-libav gst-plugins-ugly mpv youtube-dl dvd+rw-tools dvdauthor pavucontrol bijiben gparted xclip bluez bluez-plugins bluez-utils gnome gnome-extra
+pacman -S xorg-server vulkan-icd-loader lib32-vulkan-icd-loader vulkan-radeon amdvlk alsa-utils gst-libav gst-plugins-ugly mpv youtube-dl dvd+rw-tools dvdauthor pavucontrol gnome-notes gparted xclip bluez bluez-plugins bluez-utils alacarte steam gnome gnome-extra
 systemctl enable bluetooth
 systemctl enable NetworkManager
 systemctl enable gdm
