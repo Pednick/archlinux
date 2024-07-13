@@ -1,7 +1,7 @@
 setfont latarcyrheb-sun32.psfu.gz
 mkfs.ext4 /dev/sda1
 mount /dev/sda1 /mnt
-pacstrap /mnt base base-devel alsa-utils amd-ucode bind-tools btrfs-progs diffutils dosfstools exfatprogs fatresize fsarchiver gpm gptfdisk intel-ucode jfsutils lftp linux linux-atm linux-firmware lynx man-db man-pages mc mdadm mkinitcpio mtools nano nfs-utils nilfs-utils nmap openssh parted partimage reiserfsprogs rsync smartmontools squashfs-tools sudo tcpdump udftools usbutils vim xfsprogs zsh networkmanager
+pacstrap /mnt base base-devel alsa-utils exfatprogs gpm linux linux-firmware nano sudo networkmanager
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
 ln -sf /usr/share/zoneinfo/America/Toronto /etc/localtime
