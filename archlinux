@@ -29,7 +29,7 @@ nano /etc/sudoers
 nano /etc/makepkg.conf
 nano /etc/pacman.conf
 pacman -Sy
-pacman -S xorg-server lib32-mesa libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau vulkan-icd-loader lib32-vulkan-icd-loader gst-libav gst-plugins-ugly mpv pavucontrol gparted xclip bluez bluez-plugins bluez-utils gdm gnome gnome-extra
+pacman -S xorg-server lib32-nvidia-utils lib32-mesa libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau vulkan-icd-loader lib32-vulkan-icd-loader gst-libav gst-plugins-ugly mpv pavucontrol gparted xclip bluez bluez-plugins bluez-utils gdm gnome gnome-extra
 systemctl enable bluetooth
 systemctl enable NetworkManager
 systemctl enable gdm
