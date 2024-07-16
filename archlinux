@@ -1,7 +1,7 @@
 setfont latarcyrheb-sun32.psfu.gz
 mkfs.ext4 /dev/sda1
 mount /dev/sda1 /mnt
-pacstrap /mnt base base-devel alsa-utils exfatprogs gpm linux linux-firmware nano sudo networkmanager
+pacstrap /mnt base base-devel alsa-utils exfatprogs linux linux-firmware nano sudo networkmanager
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
 ln -sf /usr/share/zoneinfo/America/Toronto /etc/localtime
@@ -20,19 +20,16 @@ passwd
 pacman -S grub
 grub-install /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
-Reboot
 systemctl enable NetworkManager
 systemctl start NetworkManager
 localectl set-locale LANG=en_CA.UTF-8
-Reboot
-pacman -S gpm screen lynx
 useradd -m -G wheel -s /bin/bash lopov
 passwd lopov
 nano /etc/sudoers
 nano /etc/makepkg.conf
 nano /etc/pacman.conf
 pacman -Sy
-pacman -S xorg-server lib32-mesa libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau vulkan-icd-loader lib32-vulkan-icd-loader lib32-amdvlk gst-libav gst-plugins-ugly mpv pavucontrol gparted xclip bluez bluez-plugins bluez-utils bijiben gnome gnome-extra
+pacman -S xorg-server lib32-mesa libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau vulkan-icd-loader lib32-vulkan-icd-loader gst-libav gst-plugins-ugly mpv pavucontrol gparted xclip bluez bluez-plugins bluez-utils gdm gnome gnome-extra
 systemctl enable bluetooth
 systemctl enable NetworkManager
 systemctl enable gdm
